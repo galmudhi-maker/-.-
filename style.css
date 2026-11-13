@@ -842,3 +842,61 @@ footer p, footer > span { color: #9892aa; font-size: 11px; }
     transition-duration: .01ms !important;
   }
 }
+.demo-sphere {
+  width: 95px;
+  height: 95px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 25%, #fff, #b9dafa 35%, #8270cc 85%);
+  box-shadow: inset -15px -15px 25px #51448c55, 0 15px 30px #a99ae855;
+  animation: globeFloat 4s ease-in-out infinite;
+}
+
+.demo-torus {
+  width: 125px;
+  height: 75px;
+  border: 20px solid #9c8bdd;
+  border-radius: 50%;
+  transform: rotateX(65deg);
+  box-shadow: inset 0 0 12px #fff, 0 10px 20px #8270cc44;
+  animation: ringFloat 5s ease-in-out infinite;
+}
+
+.demo-mobius {
+  width: 130px;
+  height: 75px;
+  border: 15px solid #a99ae8;
+  border-left-color: #c9e6f5;
+  border-radius: 50%;
+  transform: rotateX(55deg) rotateZ(-20deg);
+  box-shadow: 0 12px 25px #8270cc44;
+  animation: demoRotate 8s linear infinite;
+}
+
+.fib-visual {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.fib-visual span {
+  min-width: 38px;
+  padding: 9px;
+  text-align: center;
+  border-radius: 10px;
+  color: #7566b7;
+  background: #e9e4ff;
+  animation: revealNumber .45s both;
+  animation-delay: calc(var(--i) * 0.07s);
+}
+
+@keyframes revealNumber {
+  from { opacity: 0; transform: translateY(12px) scale(.8); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.note {
+  color: #8c879f;
+  font-size: 11px;
+  line-height: 1.9;
+}
+
