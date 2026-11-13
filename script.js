@@ -1,3 +1,4 @@
+alert("MATHERA JavaScript is working!");
 // MATHERA — Main JavaScript
 
 const intro = document.getElementById("intro");
