@@ -4,151 +4,219 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#eeeaff">
-  <meta name="description" content="ماثيرا، عصر جديد من استكشاف الرياضيات.">
+  <meta name="theme-color" content="#f4f1ff">
   <title>ماثيرا | MATHERA</title>
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
-
   <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-  <!-- شريط التنقل -->
-  <header class="navbar">
-    <a href="#" class="logo">MATHERA<span>.</span></a>
+  <div class="ambient ambient-one"></div>
+  <div class="ambient ambient-two"></div>
+  <div class="particles" id="particles"></div>
 
+  <header class="navbar">
+    <a class="brand" href="#home">
+      <span class="brand-icon">M</span>
+      <span>MATHERA<span class="brand-dot">.</span></span>
+    </a>
     <nav>
       <a href="#home">الرئيسية</a>
       <a href="#worlds">العوالم</a>
       <a href="#about">عن ماثيرا</a>
     </nav>
+    <a class="nav-cta" href="#worlds">ابدأ الاستكشاف ↗</a>
   </header>
 
-  <!-- الواجهة الرئيسية -->
-  <main id="mainSite">
-
+  <main>
     <section class="hero" id="home">
-      <div class="hero-content">
-        <span class="eyebrow">MATHERA EXPERIENCE</span>
-
-        <h1>مرحبًا بك في <span>ماثيرا</span></h1>
-
+      <div class="hero-copy reveal">
+        <span class="eyebrow"><i></i> THE MATHEMATICAL UNIVERSE</span>
+        <h1>الرياضيات<br>بعالمٍ <span>آخر.</span></h1>
         <p>
-          عصر جديد من استكشاف الرياضيات،
-          حيث تتحول الأرقام إلى عوالم من الاكتشاف.
+          ليست مجرد أرقام ومعادلات؛ إنها لغة تصنع العالم من حولنا.
+          اكتشفها من منظور جديد في ماثيرا.
         </p>
-
-        <a href="#worlds" class="primary-btn">
-          استكشف العوالم <span>←</span>
-        </a>
+        <div class="hero-actions">
+          <a class="primary-btn" href="#worlds">اكتشف العوالم <span>↙</span></a>
+          <a class="text-link" href="#about">اكتشف فكرة ماثيرا</a>
+        </div>
+        <div class="hero-stats">
+          <div><strong>05</strong><span>عوالم استكشافية</span></div>
+          <div><strong>∞</strong><span>احتمالات لا نهائية</span></div>
+          <div><strong>01</strong><span>تجربة مختلفة</span></div>
+        </div>
       </div>
 
-      <div class="hero-art" aria-hidden="true">
-        <div class="orbit orbit-one"></div>
-        <div class="orbit orbit-two"></div>
-        <div class="math-symbol">∞</div>
-        <span class="symbol symbol-one">π</span>
-        <span class="symbol symbol-two">∑</span>
-        <span class="symbol symbol-three">√</span>
+      <div class="hero-stage" aria-label="مجسم هندسي ثلاثي الأبعاد">
+        <div class="stage-glow"></div>
+        <div class="orbit orbit-a"></div>
+        <div class="orbit orbit-b"></div>
+        <div class="orbit orbit-c"></div>
+
+        <div class="floating-cube">
+          <div class="cube-face front"></div>
+          <div class="cube-face back"></div>
+          <div class="cube-face right"></div>
+          <div class="cube-face left"></div>
+          <div class="cube-face top"></div>
+          <div class="cube-face bottom"></div>
+        </div>
+
+        <div class="floating-sphere"></div>
+        <div class="floating-ring"></div>
+        <span class="floating-symbol symbol-pi">π</span>
+        <span class="floating-symbol symbol-sigma">Σ</span>
+        <span class="floating-symbol symbol-infinity">∞</span>
+        <div class="stage-caption">MATHEMATICS IN MOTION <span>✦</span></div>
       </div>
+
+      <div class="scroll-cue"><span></span> مرّر لاكتشاف ماثيرا</div>
     </section>
 
-    <!-- العوالم الخمسة -->
-    <section class="worlds-section" id="worlds">
+    <section class="intro-strip reveal">
+      <span class="strip-mark">M.</span>
+      <p>من الهندسة إلى الطبيعة، ومن الموجات إلى الأبعاد؛ <strong>كل شيء يحمل نمطًا رياضيًا ينتظر أن تكتشفه.</strong></p>
+    </section>
 
-      <div class="section-heading">
-        <span>DISCOVER MATHERA</span>
-        <h2>اختر عالمك القادم</h2>
-        <p>خمسة عوالم، وتجارب رياضية تتجاوز حدود المألوف.</p>
+    <section class="worlds-section section-pad" id="worlds">
+      <div class="section-heading reveal">
+        <div>
+          <span class="eyebrow">EXPLORE THE UNIVERSE</span>
+          <h2>خمسة عوالم.<br><span>آفاق بلا حدود.</span></h2>
+        </div>
+        <p>اختر بوابتك، وابدأ تجربة تفاعلية تكشف لك وجهًا جديدًا للرياضيات.</p>
       </div>
 
       <div class="worlds-grid">
 
-        <article class="world-card" id="cityWorld">
-          <div class="world-visual city-visual">⌂</div>
-          <span>01 / GEOMETRY</span>
-          <h3>مدينة المستقبل</h3>
-          <p>اكتشف كيف تساعد الرياضيات في تخطيط المدن وتوزيع المساحات.</p>
-          <button class="explore-btn" data-world="city">استكشف العالم ←</button>
+        <article class="world-card card-city reveal" data-world="city">
+          <div class="card-top"><span>WORLD 01</span><span>01 / 05</span></div>
+          <div class="card-art city-art">
+            <div class="city-building building-one"></div>
+            <div class="city-building building-two"></div>
+            <div class="city-building building-three"></div>
+            <div class="city-orbit"></div>
+          </div>
+          <div class="card-info">
+            <span class="card-category">GEOMETRY & DESIGN</span>
+            <h3>مدينة المستقبل</h3>
+            <p>حين تتحول المساحات والأبعاد إلى مدن ذكية.</p>
+            <button class="explore-btn">استكشف العالم <span>↗</span></button>
+          </div>
         </article>
 
-        <article class="world-card" id="soundWorld">
-          <div class="world-visual sound-visual">〰</div>
-          <span>02 / WAVES</span>
-          <h3>رياضيات الصوت</h3>
-          <p>اكتشف العلاقة بين التردد والموجات والأنماط الرياضية.</p>
-          <button class="explore-btn" data-world="sound">استكشف العالم ←</button>
+        <article class="world-card card-sound reveal" data-world="sound">
+          <div class="card-top"><span>WORLD 02</span><span>02 / 05</span></div>
+          <div class="card-art sound-art">
+            <div class="sound-rings"></div>
+            <div class="sound-core">♪</div>
+            <div class="sound-wave"></div>
+          </div>
+          <div class="card-info">
+            <span class="card-category">WAVES & FUNCTIONS</span>
+            <h3>رياضيات الصوت</h3>
+            <p>استكشف الترددات والموجات بلغة الرياضيات.</p>
+            <button class="explore-btn">استكشف العالم <span>↗</span></button>
+          </div>
         </article>
 
-        <article class="world-card" id="spaceWorld">
-          <div class="world-visual space-visual">◇</div>
-          <span>03 / DIMENSIONS</span>
-          <h3>عالم بلا حدود</h3>
-          <p>رحلة بين الأشكال الهندسية والأبعاد والأجسام الرياضية.</p>
-          <button class="explore-btn" data-world="space">استكشف العالم ←</button>
+        <article class="world-card card-space reveal" data-world="space">
+          <div class="card-top"><span>WORLD 03</span><span>03 / 05</span></div>
+          <div class="card-art space-art">
+            <div class="space-cube"></div>
+            <div class="space-sphere"></div>
+            <div class="space-loop"></div>
+          </div>
+          <div class="card-info">
+            <span class="card-category">GEOMETRY & DIMENSIONS</span>
+            <h3>عالم بلا حدود</h3>
+            <p>رحلة بين الأشكال والأبعاد الهندسية المدهشة.</p>
+            <button class="explore-btn">استكشف العالم <span>↗</span></button>
+          </div>
         </article>
 
-        <article class="world-card" id="earthWorld">
-          <div class="world-visual earth-visual">◎</div>
-          <span>04 / MATHEMATICAL MODELS</span>
-          <h3>نبض الأرض</h3>
-          <p>تعرّف على دور النماذج الرياضية في فهم الظواهر الطبيعية.</p>
-          <button class="explore-btn" data-world="earth">استكشف العالم ←</button>
+        <article class="world-card card-earth reveal" data-world="earth">
+          <div class="card-top"><span>WORLD 04</span><span>04 / 05</span></div>
+          <div class="card-art earth-art">
+            <div class="earth-globe"></div>
+            <div class="earth-orbit"></div>
+            <span class="earth-point"></span>
+          </div>
+          <div class="card-info">
+            <span class="card-category">MATHEMATICAL MODELS</span>
+            <h3>نبض الأرض</h3>
+            <p>كيف تساعد المعادلات في فهم الظواهر الطبيعية؟</p>
+            <button class="explore-btn">استكشف العالم <span>↗</span></button>
+          </div>
         </article>
 
-        <article class="world-card" id="natureWorld">
-          <div class="world-visual nature-visual">✳</div>
-          <span>05 / PATTERNS</span>
-          <h3>شيفرة الطبيعة</h3>
-          <p>اكتشف المتتاليات والأنماط الرياضية في عالم الطبيعة.</p>
-          <button class="explore-btn" data-world="nature">استكشف العالم ←</button>
+        <article class="world-card card-nature reveal">
+          <div class="card-top"><span>WORLD 05</span><span>05 / 05</span></div>
+          <div class="card-art nature-art" data-world="nature">
+            <div class="fibonacci-spiral">
+              <span>1</span><span>1</span><span>2</span><span>3</span><span>5</span><span>8</span>
+            </div>
+            <div class="nature-orb"></div>
+          </div>
+          <div class="card-info">
+            <span class="card-category">SEQUENCES & PATTERNS</span>
+            <h3>شيفرة الطبيعة</h3>
+            <p>تتبّع الأنماط والمتتاليات في عالم الطبيعة.</p>
+            <button class="explore-btn">استكشف العالم <span>↗</span></button>
+          </div>
         </article>
 
       </div>
     </section>
 
-    <!-- عن المشروع -->
-    <section class="about-section" id="about">
-      <span>ABOUT MATHERA</span>
-      <h2>ما وراء الأرقام عالم كامل</h2>
-      <p>
-        ماثيرا منصة رقمية تفاعلية تهدف إلى تقديم الرياضيات
-        بأسلوب استكشافي، من خلال ربط المفاهيم الرياضية
-        بتطبيقاتها في الحياة والعلوم والطبيعة.
-      </p>
-      <div class="about-name">
-        <strong>MATH</strong> + <strong>ERA</strong>
-        <p>عصر جديد من استكشاف الرياضيات</p>
-      </div>
+    <section class="quote-section reveal">
+      <div class="quote-symbol">∞</div>
+      <span class="eyebrow">A DIFFERENT PERSPECTIVE</span>
+      <h2>كل نمط يحكي قصة.<br><span>وكل معادلة تفتح بابًا.</span></h2>
+      <p>الرياضيات ليست نهاية السؤال، بل بداية الاكتشاف.</p>
     </section>
 
+    <section class="about-section section-pad" id="about">
+      <div class="about-visual reveal">
+        <div class="about-orbit"></div>
+        <div class="about-shape">π</div>
+        <span class="about-label">MATH + ERA</span>
+      </div>
+      <div class="about-copy reveal">
+        <span class="eyebrow">ABOUT MATHERA</span>
+        <h2>ما هي <span>ماثيرا؟</span></h2>
+        <p>
+          ماثيرا منصة رقمية تفاعلية تعيد تقديم الرياضيات بأسلوب استكشافي
+          يجمع بين المفاهيم العلمية والتجارب البصرية والتطبيقات العملية.
+        </p>
+        <p>
+          الاسم مستوحى من كلمتي MATH و ERA، ليعبّر عن عصر جديد
+          من استكشاف الرياضيات.
+        </p>
+        <a href="#worlds" class="primary-btn">تابع الاستكشاف ↗</a>
+      </div>
+    </section>
   </main>
 
-  <!-- نافذة العوالم التفاعلية -->
+  <footer>
+    <a class="brand" href="#home"><span class="brand-icon">M</span>MATHERA<span class="brand-dot">.</span></a>
+    <p>حيث تتحول الأرقام إلى عوالم من الاكتشاف.</p>
+    <span>© 2026 MATHERA</span>
+  </footer>
+
   <div class="modal" id="worldModal" aria-hidden="true">
-    <div class="modal-content">
-
-      <button class="close-modal" id="closeModal" aria-label="إغلاق">×</button>
-
-      <span id="modalNumber"></span>
+    <div class="modal-panel">
+      <button class="modal-close" id="closeModal" aria-label="إغلاق">×</button>
+      <div class="modal-kicker" id="modalNumber"></div>
       <h2 id="modalTitle"></h2>
-      <p id="modalDescription"></p>
-
-      <div id="modalExperiment"></div>
-
+      <p class="modal-description" id="modalDescription"></p>
+      <div class="modal-body" id="modalExperiment"></div>
     </div>
   </div>
 
-  <footer>
-    <p>MATHERA © 2026</p>
-    <p>في ماثيرا، لا نكتفي بتعلّم الرياضيات، بل ندخل عالمها لنكتشف كيف تعمل.</p>
-  </footer>
-
   <script src="script.js"></script>
-
 </body>
 </html>
