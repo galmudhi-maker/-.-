@@ -1,291 +1,356 @@
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  const modal = document.getElementById("worldModal");
-  const closeModal = document.getElementById("closeModal");
-  const modalTitle = document.getElementById("modalTitle");
-  const modalNumber = document.getElementById("modalNumber");
-  const modalDescription = document.getElementById("modalDescription");
-  const modalExperiment = document.getElementById("modalExperiment");
+  // خلفية الجسيمات المتحركة
+  const particles = document.getElementById("particles");
 
+  for (let i = 0; i < 45; i++) {
+    const particle = document.createElement("span");
+    particle.className = "particle";
+    particle.style.left = Math.random() * 100 + "%";
+    particle.style.top = Math.random() * 100 + "%";
+    particle.style.animationDelay = Math.random() * 8 + "s";
+    particle.style.animationDuration = 5 + Math.random() * 9 + "s";
+    particles.appendChild(particle);
+  }
+
+  // ظهور العناصر عند التمرير
+  const revealObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("visible");
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll(".reveal").forEach(element => {
+    revealObserver.observe(element);
+  });
+
+  // تأثير العمق على البطاقات
+  const canHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+
+  if (canHover) {
+    document.querySelectorAll(".world-card").forEach(card => {
+      card.addEventListener("pointermove", event => {
+        const rect = card.getBoundingClientRect();
+        const x = (event.clientX - rect.left) / rect.width;
+        const y = (event.clientY - rect.top) / rect.height;
+
+        card.style.transform =
+          `translateY(-10px) rotateX(${(0.5 - y) * 7}deg) rotateY(${(x - 0.5) * 7}deg)`;
+      });
+
+      card.addEventListener("pointerleave", () => {
+        card.style.transform = "";
+      });
+    });
+  }
+
+  // بيانات العوالم
   const worlds = {
-
     city: {
-      number: "01 / GEOMETRY",
+      number: "WORLD 01 / GEOMETRY",
       title: "مدينة المستقبل",
-      description: "استخدم الرياضيات لتوزيع المساحات والتخطيط للمنشآت داخل المدينة.",
-      experiment: `
+      description: "اكتشف كيف تساعد النسب والمساحات في توزيع المنشآت والتخطيط للمدن.",
+      content: `
         <div class="experiment">
-          <h3>حاسبة توزيع المساحات</h3>
-          <label>المساحة الكلية (متر مربع)</label>
-          <input type="number" id="cityArea" min="1" placeholder="مثال: 1200">
-
+          <h3>مختبر تخطيط المدينة</h3>
+          <label>المساحة الإجمالية بالمتر المربع</label>
+          <input id="cityArea" type="number" min="1" placeholder="مثال: 12000">
           <label>عدد المنشآت</label>
-          <input type="number" id="cityCount" min="1" placeholder="مثال: 6">
-
-          <button id="calculateCity">احسب التوزيع</button>
-          <div class="result" id="cityResult">ستظهر النتيجة هنا</div>
-        </div>
-      `
+          <input id="cityCount" type="number" min="1" step="1" placeholder="مثال: 8">
+          <button id="cityCalculate">احسب توزيع المساحات</button>
+          <div class="result" id="cityResult">أدخل البيانات لاكتشاف النتيجة.</div>
+        </div>`
     },
 
     sound: {
-      number: "02 / WAVES",
+      number: "WORLD 02 / WAVES",
       title: "رياضيات الصوت",
-      description: "استكشف كيف يؤثر التردد في عدد الاهتزازات خلال الثانية.",
-      experiment: `
+      description: "التردد هو عدد الاهتزازات الكاملة التي تحدث خلال ثانية واحدة. غيّر التردد وشاهد شكل الموجة يتغير.",
+      content: `
         <div class="experiment">
-          <h3>مختبر التردد</h3>
-          <p>حرّك المؤشر لتغيير التردد:</p>
-
-          <input type="range" id="frequency" min="1" max="20" value="5">
-
-          <div class="result">
-            التردد:
-            <strong id="frequencyValue">5</strong>
-            هرتز
-          </div>
-
-          <div class="wave-display" id="waveDisplay">
-            <svg viewBox="0 0 300 100" width="100%" role="img" aria-label="رسم توضيحي لموجة">
-              <path id="wavePath" d="" fill="none" stroke="#9182df" stroke-width="3"/>
-            </svg>
-          </div>
-
-          <p id="waveInfo">5 اهتزازات في الثانية.</p>
-        </div>
-      `
+          <h3>مختبر الموجات</h3>
+          <label>التردد: <strong id="frequencyValue">3</strong> هرتز</label>
+          <input id="frequency" type="range" min="1" max="12" value="3">
+          <canvas class="wave-canvas" id="waveCanvas" aria-label="رسم متحرك للموجة"></canvas>
+          <div class="result" id="waveResult">3 اهتزازات في الثانية.</div>
+        </div>`
     },
 
     space: {
-      number: "03 / DIMENSIONS",
+      number: "WORLD 03 / DIMENSIONS",
       title: "عالم بلا حدود",
-      description: "تعرّف على خصائص الأشكال الهندسية وأبعادها.",
-      experiment: `
+      description: "الأشكال الهندسية ليست مجرد رسومات؛ إنها أجسام لها خصائص وأبعاد يمكن استكشافها.",
+      content: `
         <div class="experiment">
-          <h3>مستكشف الأشكال</h3>
-
+          <h3>استوديو الأشكال ثلاثية الأبعاد</h3>
           <select id="shapeSelect">
             <option value="cube">المكعب</option>
             <option value="sphere">الكرة</option>
             <option value="torus">الحلقة الهندسية</option>
             <option value="mobius">شريط موبيوس</option>
           </select>
-
-          <div class="shape-display" id="shapeDisplay">◇</div>
-          <div class="result" id="shapeInfo">
-            المكعب: شكل هندسي ثلاثي الأبعاد له ستة أوجه مربعة.
+          <div class="shape-stage" id="shapeStage">
+            <div class="demo-cube">
+              <i></i><i></i><i></i><i></i><i></i><i></i>
+            </div>
           </div>
-        </div>
-      `
+          <div class="result" id="shapeResult">المكعب: له 6 أوجه و12 حرفًا و8 رؤوس.</div>
+        </div>`
     },
 
     earth: {
-      number: "04 / MATHEMATICAL MODELS",
+      number: "WORLD 04 / MATHEMATICAL MODELS",
       title: "نبض الأرض",
-      description: "استخدم العلاقة بين المسافة والسرعة والزمن لفهم الحركة.",
-      experiment: `
+      description: "تساعد النماذج الرياضية على تمثيل الحركة والعلاقات بين المسافة والسرعة والزمن.",
+      content: `
         <div class="experiment">
-          <h3>حاسبة الزمن</h3>
-
-          <label>المسافة (كيلومتر)</label>
-          <input type="number" id="distance" min="0" placeholder="مثال: 100">
-
-          <label>السرعة (كم/ساعة)</label>
-          <input type="number" id="speed" min="0" placeholder="مثال: 50">
-
-          <button id="calculateTime">احسب الزمن</button>
-          <div class="result" id="timeResult">ستظهر النتيجة هنا</div>
-
-          <p class="note">
-            نموذج تعليمي مبسط لفهم العلاقة الرياضية، وليس أداة للتنبؤ بالزلازل.
-          </p>
-        </div>
-      `
+          <h3>مختبر الحركة والزمن</h3>
+          <label>المسافة بالكيلومتر</label>
+          <input id="distance" type="number" min="0" placeholder="مثال: 150">
+          <label>السرعة بالكيلومتر لكل ساعة</label>
+          <input id="speed" type="number" min="0" placeholder="مثال: 50">
+          <button id="timeCalculate">احسب الزمن</button>
+          <div class="result" id="timeResult">الزمن = المسافة ÷ السرعة</div>
+          <p class="note">هذا نموذج تعليمي مبسط للحركة، وليس أداة للتنبؤ بالظواهر الطبيعية.</p>
+        </div>`
     },
 
     nature: {
-      number: "05 / PATTERNS",
+      number: "WORLD 05 / SEQUENCES",
       title: "شيفرة الطبيعة",
-      description: "اكتشف متتالية فيبوناتشي وكيف تتكون الأعداد من مجموع العددين السابقين.",
-      experiment: `
+      description: "اكتشف متتالية فيبوناتشي، حيث ينتج كل حد من مجموع الحدين السابقين له.",
+      content: `
         <div class="experiment">
           <h3>مولّد متتالية فيبوناتشي</h3>
-
-          <label>عدد الحدود</label>
-          <input type="number" id="fibCount" min="2" max="20" value="10">
-
-          <button id="generateFib">أنشئ المتتالية</button>
-          <div class="result" id="fibResult">
-            0 ، 1 ، 1 ، 2 ، 3 ، 5 ، 8 ، 13
-          </div>
-        </div>
-      `
+          <label>عدد الحدود (من 2 إلى 20)</label>
+          <input id="fibCount" type="number" min="2" max="20" value="10">
+          <button id="fibGenerate">ولّد المتتالية</button>
+          <div class="result" id="fibResult">0 ، 1 ، 1 ، 2 ، 3 ، 5 ، 8 ، 13</div>
+          <div id="fibVisual" class="fib-visual"></div>
+        </div>`
     }
-
   };
 
-  // فتح نافذة العالم
-  document.querySelectorAll("[data-world]").forEach(button => {
-    button.addEventListener("click", () => {
-      const world = worlds[button.dataset.world];
+  // النافذة التفاعلية
+  const modal = document.getElementById("worldModal");
+  const closeButton = document.getElementById("closeModal");
+  const modalNumber = document.getElementById("modalNumber");
+  const modalTitle = document.getElementById("modalTitle");
+  const modalDescription = document.getElementById("modalDescription");
+  const modalExperiment = document.getElementById("modalExperiment");
 
-      if (!world) return;
+  function openWorld(key) {
+    const world = worlds[key];
+    if (!world) return;
 
-      modalNumber.textContent = world.number;
-      modalTitle.textContent = world.title;
-      modalDescription.textContent = world.description;
-      modalExperiment.innerHTML = world.experiment;
+    modalNumber.textContent = world.number;
+    modalTitle.textContent = world.title;
+    modalDescription.textContent = world.description;
+    modalExperiment.innerHTML = world.content;
 
-      modal.classList.add("active");
-      modal.setAttribute("aria-hidden", "false");
-      document.body.style.overflow = "hidden";
+    modal.classList.add("active");
+    modal.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
 
-      setupExperiment(button.dataset.world);
-    });
-  });
+    setupExperiment(key);
+  }
 
-  // إغلاق النافذة
-  function closeWorldModal() {
+  function closeWorld() {
     modal.classList.remove("active");
     modal.setAttribute("aria-hidden", "true");
     document.body.style.overflow = "";
   }
 
-  closeModal.addEventListener("click", closeWorldModal);
+  document.querySelectorAll(".world-card[data-world]").forEach(card => {
+    card.addEventListener("click", () => openWorld(card.dataset.world));
+    card.setAttribute("tabindex", "0");
+    card.setAttribute("role", "button");
+
+    card.addEventListener("keydown", event => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        openWorld(card.dataset.world);
+      }
+    });
+  });
+
+  closeButton.addEventListener("click", closeWorld);
 
   modal.addEventListener("click", event => {
-    if (event.target === modal) {
-      closeWorldModal();
-    }
+    if (event.target === modal) closeWorld();
   });
 
   document.addEventListener("keydown", event => {
     if (event.key === "Escape" && modal.classList.contains("active")) {
-      closeWorldModal();
+      closeWorld();
     }
   });
 
-  // إعداد التجارب
-  function setupExperiment(world) {
+  // تشغيل التجارب
+  function setupExperiment(key) {
 
-    if (world === "city") {
-      document.getElementById("calculateCity").addEventListener("click", () => {
+    if (key === "city") {
+      document.getElementById("cityCalculate").addEventListener("click", () => {
         const area = Number(document.getElementById("cityArea").value);
         const count = Number(document.getElementById("cityCount").value);
-        const result = document.getElementById("cityResult");
+        const output = document.getElementById("cityResult");
 
         if (!Number.isFinite(area) || !Number.isInteger(count) || area <= 0 || count <= 0) {
-          result.textContent = "أدخل مساحة وعدد منشآت صحيحين أكبر من صفر.";
+          output.textContent = "يرجى إدخال مساحة وعدد منشآت صحيحين أكبر من صفر.";
           return;
         }
 
-        result.textContent =
-          `نصيب كل منشأة: ${(area / count).toLocaleString("ar-SA", {
+        const share = area / count;
+        output.textContent =
+          `المساحة المخصصة لكل منشأة: ${share.toLocaleString("ar-SA", {
             maximumFractionDigits: 2
-          })} متر مربع`;
+          })} متر مربع.`;
       });
     }
 
-    if (world === "sound") {
+    if (key === "sound") {
+      const canvas = document.getElementById("waveCanvas");
+      const ctx = canvas.getContext("2d");
       const slider = document.getElementById("frequency");
       const value = document.getElementById("frequencyValue");
-      const info = document.getElementById("waveInfo");
-      const path = document.getElementById("wavePath");
+      const output = document.getElementById("waveResult");
 
-      function updateWave() {
-        const frequency = Number(slider.value);
+      let frequency = Number(slider.value);
+      let animationFrame;
+      let phase = 0;
 
-        value.textContent = frequency;
-        info.textContent = `${frequency} اهتزازات في الثانية.`;
+      function drawWave() {
+        const width = canvas.clientWidth;
+        const height = canvas.clientHeight;
+        const ratio = window.devicePixelRatio || 1;
 
-        let points = [];
+        canvas.width = width * ratio;
+        canvas.height = height * ratio;
+        ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+        ctx.clearRect(0, 0, width, height);
 
-        for (let x = 0; x <= 300; x += 2) {
-          const y = 50 - Math.sin((x / 300) * frequency * Math.PI * 2) * 28;
-          points.push(`${x === 0 ? "M" : "L"} ${x} ${y}`);
+        ctx.beginPath();
+        ctx.strokeStyle = "#d2c8f7";
+        ctx.lineWidth = 1;
+        ctx.moveTo(0, height / 2);
+        ctx.lineTo(width, height / 2);
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.strokeStyle = "#8977d2";
+        ctx.lineWidth = 3;
+
+        for (let x = 0; x <= width; x++) {
+          const y = height / 2 -
+            Math.sin((x / width) * frequency * Math.PI * 2 + phase) *
+            (height * 0.3);
+
+          if (x === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
         }
 
-        path.setAttribute("d", points.join(" "));
+        ctx.stroke();
+        phase += 0.025;
+        animationFrame = requestAnimationFrame(drawWave);
       }
 
-      slider.addEventListener("input", updateWave);
-      updateWave();
+      slider.addEventListener("input", () => {
+        frequency = Number(slider.value);
+        value.textContent = frequency;
+        output.textContent = `${frequency} اهتزازات في الثانية.`;
+      });
+
+      drawWave();
+
+      modal.addEventListener("transitionend", function stopWave(event) {
+        if (event.target === modal && !modal.classList.contains("active")) {
+          cancelAnimationFrame(animationFrame);
+          modal.removeEventListener("transitionend", stopWave);
+        }
+      });
     }
 
-    if (world === "space") {
+    if (key === "space") {
       const select = document.getElementById("shapeSelect");
-      const display = document.getElementById("shapeDisplay");
-      const info = document.getElementById("shapeInfo");
+      const stage = document.getElementById("shapeStage");
+      const output = document.getElementById("shapeResult");
 
       const shapes = {
         cube: {
-          symbol: "⬡",
-          text: "المكعب: جسم ثلاثي الأبعاد له 6 أوجه مربعة و12 حرفًا و8 رؤوس."
+          text: "المكعب: جسم ثلاثي الأبعاد له 6 أوجه مربعة و12 حرفًا و8 رؤوس.",
+          html: `<div class="demo-cube"><i></i><i></i><i></i><i></i><i></i><i></i></div>`
         },
         sphere: {
-          symbol: "◉",
-          text: "الكرة: جسم ثلاثي الأبعاد جميع نقاط سطحه تبعد المسافة نفسها عن مركزه."
+          text: "الكرة: جسم ثلاثي الأبعاد سطحه منحني، وجميع نقاط سطحه تبعد المسافة نفسها عن مركزه.",
+          html: `<div class="demo-sphere"></div>`
         },
         torus: {
-          symbol: "◎",
-          text: "الحلقة الهندسية: سطح يشبه شكل الإطار الدائري، وله ثقب في المنتصف."
+          text: "الحلقة الهندسية: سطح ثلاثي الأبعاد يشبه الإطار الدائري وله ثقب في المنتصف.",
+          html: `<div class="demo-torus"></div>`
         },
         mobius: {
-          symbol: "∞",
-          text: "شريط موبيوس: سطح رياضي مميز له وجه واحد وحافة واحدة."
+          text: "شريط موبيوس: سطح رياضي له وجه واحد وحافة واحدة، ويمكن تمثيله بشريط نصف لفة.",
+          html: `<div class="demo-mobius"></div>`
         }
       };
 
       select.addEventListener("change", () => {
         const shape = shapes[select.value];
-        display.textContent = shape.symbol;
-        info.textContent = shape.text;
+        stage.innerHTML = shape.html;
+        output.textContent = shape.text;
       });
     }
 
-    if (world === "earth") {
-      document.getElementById("calculateTime").addEventListener("click", () => {
+    if (key === "earth") {
+      document.getElementById("timeCalculate").addEventListener("click", () => {
         const distance = Number(document.getElementById("distance").value);
         const speed = Number(document.getElementById("speed").value);
-        const result = document.getElementById("timeResult");
+        const output = document.getElementById("timeResult");
 
         if (!Number.isFinite(distance) || !Number.isFinite(speed) ||
             distance <= 0 || speed <= 0) {
-          result.textContent = "أدخل مسافة وسرعة صحيحتين أكبر من صفر.";
+          output.textContent = "أدخل مسافة وسرعة أكبر من صفر.";
           return;
         }
 
-        const time = distance / speed;
-        const hours = Math.floor(time);
-        const minutes = Math.round((time - hours) * 60);
+        const totalMinutes = distance / speed * 60;
+        const hours = Math.floor(totalMinutes / 60);
+        const minutes = Math.round(totalMinutes % 60);
 
-        result.textContent =
-          `الزمن التقريبي: ${hours} ساعة و${minutes} دقيقة.`;
+        output.textContent = `الزمن التقريبي: ${hours} ساعة و${minutes} دقيقة.`;
       });
     }
 
-    if (world === "nature") {
-      document.getElementById("generateFib").addEventListener("click", () => {
+    if (key === "nature") {
+      document.getElementById("fibGenerate").addEventListener("click", () => {
         const count = Number(document.getElementById("fibCount").value);
-        const result = document.getElementById("fibResult");
+        const output = document.getElementById("fibResult");
+        const visual = document.getElementById("fibVisual");
 
         if (!Number.isInteger(count) || count < 2 || count > 20) {
-          result.textContent = "اختر عددًا صحيحًا من 2 إلى 20.";
+          output.textContent = "اختر عددًا صحيحًا بين 2 و20.";
+          visual.innerHTML = "";
           return;
         }
 
         const sequence = [0, 1];
 
         while (sequence.length < count) {
-          const next =
+          sequence.push(
             sequence[sequence.length - 1] +
-            sequence[sequence.length - 2];
-
-          sequence.push(next);
+            sequence[sequence.length - 2]
+          );
         }
 
-        result.textContent = sequence.join(" ، ");
+        output.textContent = sequence.join(" ، ");
+        visual.innerHTML = sequence.slice(0, 10)
+          .map((number, index) =>
+            `<span style="--i:${index}">${number}</span>`
+          ).join("");
       });
     }
   }
