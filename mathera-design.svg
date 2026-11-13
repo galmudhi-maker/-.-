@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
+  <defs>
+    <linearGradient id="mathGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#C9B8FF"/>
+      <stop offset="100%" stop-color="#A9D9F7"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <circle cx="250" cy="250" r="190" fill="#F5F2FF"/>
+  <circle cx="250" cy="250" r="155" fill="none" stroke="#D9D0F8" stroke-width="2" stroke-dasharray="5 10"/>
+
+  <g fill="none" stroke="url(#mathGradient)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M250 95 L385 330 L115 330 Z" opacity=".85"/>
+    <circle cx="250" cy="250" r="105" opacity=".6"/>
+    <path d="M145 250 Q250 90 355 250 Q250 410 145 250Z" opacity=".8"/>
+  </g>
+
+  <g filter="url(#glow)">
+    <circle cx="250" cy="95" r="12" fill="#B9A7F5"/>
+    <circle cx="385" cy="330" r="12" fill="#9BCFEF"/>
+    <circle cx="115" cy="330" r="12" fill="#B9A7F5"/>
+    <circle cx="250" cy="250" r="17" fill="url(#mathGradient)"/>
+  </g>
+
+  <g fill="#A99AE0" font-family="Arial" font-size="25" font-weight="bold">
+    <text x="235" y="55">π</text>
+    <text x="405" y="245">∞</text>
+    <text x="75" y="245">∑</text>
+  </g>
+
+  <text x="250" y="455" text-anchor="middle"
+        fill="#8172B9" font-family="Arial" font-size="24"
+        font-weight="bold" letter-spacing="5">MATHERA</text>
+</svg>
